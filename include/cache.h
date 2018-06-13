@@ -11,7 +11,7 @@ class Cache : public Mp {
 		Cache();
 		~Cache();
 		int getLinha();
-		void setLinha(int l);
+		void setLinha(int linha);
 
 		friend ostream& operator<<(ostream &os, Cache &c);
 		friend istream& operator>>(istream &is, Cache &c);

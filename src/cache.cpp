@@ -10,8 +10,8 @@ int Cache::getLinha() {
 	return linha;
 }
 
-void Cache::setLinha(int l) {
-	linha = l;
+void Cache::setLinha(int linha) {
+	this.linha = linha;
 }
 
 ostream& operator<<(ostream &os, Cache &c) {

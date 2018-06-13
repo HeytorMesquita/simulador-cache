@@ -23,16 +23,16 @@ class Mp {
 		vector<int> getEndereco();
 		vector<int> getConteudo();
 
-		void setBloco(int b);
-		void setEndereco(vector<int> e);
-		void setConteudo(vector<int> c);
+		void setBloco(int bloco);
+		void setEndereco(vector<int> endereco);
+		void setConteudo(vector<int> conteudo);
 
-		void inserirConteudo(int co);
-		void inserirEndereco(int en);
+		void inserirConteudo(int conteudo);
+		void inserirEndereco(int endereco);
 
-		friend ostream& operator<<(ostream &os, Mp &m);
+		friend ostream& operator<<(ostream &os, Mp &memoria_principal);
 
-		friend istream& operator>>(istream &is, Mp &m);
+		friend istream& operator>>(istream &is, Mp &memoria_principal);
 };
 
 #endif//_MP_H_

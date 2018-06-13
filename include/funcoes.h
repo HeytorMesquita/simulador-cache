@@ -17,12 +17,12 @@ using std::getline;
 #include "cache.h"
 #include "mp.h"
 
-void configuracao(int &s, int &l, int &b, int &map, int &setSize, int &sub, int &write);
+void configuracao(int &tamanhob, int &linha, int &bloco, int &mapeamento, int &tamanho_bloco, int &substituicao);
 
-void init(Mp *m, Cache *c, int &s, int &l, int &b, int &map, int &setSize, int &sub, int &write);
+void init(Mp *memoria_principal, Cache *cache, int &tamanhob, int &linha, int &bloco, int &mapeamento, int &tamanho_bloco, int &substituicao);
 
-void initMpCache(Mp *m, Cache *c, int sizeBlock, int block, int line);
+void initMpCache(Mp *memoria_principal, Cache *cache, int tamanho_bloco, int bloco, int linha);
 
-void print(Mp *m, Cache *c, int sizeBlock, int block, int line);
+void print(Mp *memoria_principal, Cache *cache, int tamanho_bloco, int bloco, int linha);
 
 #endif//_FUNCOES_H_

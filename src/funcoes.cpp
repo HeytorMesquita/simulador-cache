@@ -1,11 +1,11 @@
 #include "funcoes.h"
 
-void configuracao(int &s, int &l, int &b, int &m, int &set_size, int &sub, int &write) {
-	string linha;
+void configuracao(int &tamanhob, int &linha, int &bloco, int &mapeamento, int &conjunto, int &substituicao) {
+	string leitura_linha;
 	int cont = 0;
 
 	// Caminho do arquivo
-	ifstream entrada("data/config.txt");
+	ifstream entrada("data/config1.txt");
 
 	// Verificando consistencia do arquivo
 	if(!entrada) {
@@ -14,11 +14,11 @@ void configuracao(int &s, int &l, int &b, int &m, int &set_size, int &sub, int &
 	}
 
 	// contador
-	while(getline(entrada, linha))
+	while(getline(entrada, leitura_linha))
 		cont++;
 
 	// Verificando quantidade de linhas do arquivo de configuracao
-	if(cont != 7) {
+	if(cont != 6) {
 		cout << "Arquivo de configuracao incompleto!" << endl;
 		exit(1) ;
 	}
@@ -27,63 +27,66 @@ void configuracao(int &s, int &l, int &b, int &m, int &set_size, int &sub, int &
 	entrada.clear();
 	entrada.seekg(entrada.beg);
 
-	entrada >> s;
-	entrada >> l;
-	entrada >> b;
-	entrada >> m;
-	entrada >> set_size;
-	entrada >> sub;
-	entrada >> write;
+	entrada >> tamanhob;
+	entrada >> linha;
+	entrada >> bloco;
+	entrada >> mapeamento;
+	entrada >> conjunto;
+	entrada >> substituicao;
 }
 
-void init(Mp *m, Cache *c, int &sizeBlock, int &line, int &block, int &map, int &setSize, int &sub, int &write)  {
-	initMpCache(m, c, sizeBlock, block, line);
+void init(Mp *memoriap, Cache *cache, int &tamanho_bloco, int &linha, int &bloco, int &mapeamento, int &conjunto, int &substituicao) {
+	initMpCache(memoriap, cache, tamanho_bloco, bloco, linha);
 }
 
-void initMpCache(Mp *m, Cache *c, int sizeBlock, int block, int line){
+void initMpCache(Mp *memoriap, Cache *cache, int tamanho_bloco, int bloco, int linha){
 	// Inicializa a memoria principal
 	int aux = 0;
-	for(int i = 0; i < block; i++){
-		m[i].setBloco(i);
-		for (int j = 0; j < sizeBlock; j++){
-			m[i].inserirEndereco(aux++);
-			m[i].inserirConteudo(aux*2);
+	for(int i = 0; i < bloco; i++){
+		memoriap[i].setBloco(i);
+		for (int j = 0; j < tamanho_bloco; j++){
+			memoriap[i].inserirEndereco(aux++);
+			memoriap[i].inserirConteudo(aux*2);
 		}
 	}
 
 	// Inicializa a memoria cache
-	for (int k = 0; k < line; k++){
-		c[k].setLinha(k);
-		c[k].setBloco(-1);
-		for (int z = 0; z < sizeBlock; z++) {
-			c[k].inserirEndereco(-1);
-			c[k].inserirConteudo(-1);
+	for (int k = 0; k < linha; k++){
+		cache[k].setLinha(k);
+		cache[k].setBloco(-1);
+		for (int z = 0; z < tamanho_bloco; z++) {
+			cache[k].inserirEndereco(-1);
+			cache[k].inserirConteudo(-1);
 		}
 	}
 }
 
-void print(Mp *m, Cache *c, int sizeBlock, int block, int line){
+void print(Mp *memoriap, Cache *cache, int tamanho_bloco, int bloco, int linha){
+	cout << endl;
+	cout << endl;	
 	cout << "CACHE L1" << endl;
 	cout << "Linha - Bloco - Endereco - Conteudo " << endl;
-	for(int i = 0; i < line; i++) {
-		for(int j = 0; j < sizeBlock; j++) {
-			vector<int> v_1 = c[i].getEndereco();
-			vector<int> v_2 = c[i].getConteudo();
-			cout << c[i].getLinha() << " - " << c[i].getBloco() << " - "<< v_1[j] << " - " << v_2[j];
+	for(int i = 0; i < linha; i++) {
+		for(int j = 0; j < tamanho_bloco; j++) {
+			vector<int> endereco = cache[i].getEndereco();
+			vector<int> conteudo = cache[i].getConteudo();
+			cout << cache[i].getLinha() << " - " << cache[i].getBloco() << " - "<< endereco[j] << " - " << conteudo[j];
 			cout << endl;
 		}
 	}
-	cout << endl;
 	cout << endl;
 
 	cout << "Memória Principal" << endl;
 	cout << "Bloco - Endereco - Conteudo" << endl;
-	for(int i = 0; i < block; i++) {
-		for(int j = 0; j < sizeBlock; j++) {
-			vector<int> v1 = m[i].getEndereco();
-			vector<int> v2 = m[i].getConteudo();
-			cout << m[i].getBloco() << " - " << v1[j] << " - " << v2[j];
+	for(int i = 0; i < bloco; i++) {
+		for(int j = 0; j < tamanho_bloco; j++) {
+			vector<int> v_endereco = memoriap[i].getEndereco();
+			vector<int> v_conteudo = memoriap[i].getConteudo();
+			cout << memoriap[i].getBloco() << " - " << v_endereco[j] << " - " << v_conteudo[j];
 			cout << endl;
 		}
 	}
+
+	cout << endl;
+	cout << endl;
 }
